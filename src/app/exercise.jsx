@@ -12,19 +12,29 @@ const CHANGE_TEXT = "CHANGE_TEXT";
 const ADD_TO_LIST = "ADD_TO_LIST";
 
 const increase = () => {
-  type: "INCREASE";
+  return {
+    type: INCREASE,
+  };
 };
 const decrease = () => {
-  type: "DECREASE";
+  return {
+    type: DECREASE,
+  };
 };
-const changeText = () => {
-  type: "CHANGE_TEXT", text;
+const changeText = (text) => {
+  return {
+    type: CHANGE_TEXT,
+    text: text,
+  };
 };
-const addToList = () => {
-  type: "ADD_TO_LIST", item;
+const addToList = (item) => {
+  return {
+    type: ADD_TO_LIST,
+    item: item,
+  };
 };
 
-function reducer(state, action) {
+function reducer(state = initialState, action) {
   switch (action.type) {
     case "INCREASE":
       return {
@@ -48,6 +58,21 @@ function reducer(state, action) {
       };
 
     default:
-      throw new Error("error");
+      return state;
   }
 }
+
+const store = createStore(reducer);
+console.log(store.getState());
+
+const listener = () => {
+  const state = store.getState();
+  console.log(state);
+};
+const unsubscribe = store.subscribe(listener);
+// unsubscribe();
+
+store.dispatch(increase());
+store.dispatch(decrease());
+store.dispatch(changeText("안녕하세요"));
+store.dispatch(addToList({ id: 1, text: "와우" }));

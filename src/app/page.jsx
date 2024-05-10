@@ -1,11 +1,18 @@
+"use client";
 import React from "react";
-import "./exercise";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import rootReducer from "./store";
+import CounterContainer from "./CounterContainer/page";
+import { composeWithDevTools } from "@redux-devtools/extension";
+
+const store = createStore(rootReducer, composeWithDevTools());
 
 const App = () => {
   return (
-    <>
-      <div>sdf</div>
-    </>
+    <Provider store={store}>
+      <CounterContainer />
+    </Provider>
   );
 };
 
